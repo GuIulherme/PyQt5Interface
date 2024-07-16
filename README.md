@@ -1,6 +1,5 @@
 <h1>Projeto SIDEL</h1>
 
-> Guilherme Luis Frandina e Ana Julia Ramalho
+> Data de criação do README: 16/07/2024
 
-Data de criação do README: 16/07/2024
-
+<h2>Guilherme Luis Frandina e Ana Julia Ramalhos</h2>
