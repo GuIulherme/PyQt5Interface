@@ -10,3 +10,7 @@ a. Objetivo do projeto
 -
   - Desenvolvimento de uma interface de operação e controle inteligente para um drone multi-sensorial, com foco na inspeção de torres de distribuição de energia elétrica.
 
+b. Escopo do projeto
+- 
+   - MVP (Minimum Viable Product):
+     - Uma interface capaz de apresentar as cameras instaladas no drone e que consiga movimenta-lo conforme ordenado pelos botões presentes na tela.
