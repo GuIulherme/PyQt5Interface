@@ -24,7 +24,11 @@ b. Escopo do projeto
      - Desenvolver o sistema de comunicação entre os dados do drone e a estação de base
    - Critérios de aceitação do produto
      - Interface que atenda as necessidades do profissional que irá utiliza-la (técnico de inspeção)
-   - [Link do protótipo visual](https://www.canva.com/design/DAF-v1TnDdw/y7BZAqdOR8OXGKZ0v_Uoow/edit?utm_content=DAF-v1TnDdw&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)  
+   - [Link do protótipo visual no canva](https://www.canva.com/design/DAF-v1TnDdw/y7BZAqdOR8OXGKZ0v_Uoow/edit?utm_content=DAF-v1TnDdw&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)  
+
+<h1>Quant-UX<h1>
+  
+[Link do protótipo visual no Quant-UX](https://app.quant-ux.com/#/test.html?h=a2aa10aOGwpjBgfFFBQx0cFbVmsiybto60yOwOMCKFcIyLVSe51ziWE7or3O&ln=en)  
 
 <h1>Diagrama de Atividades</h1>
 
