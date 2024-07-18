@@ -26,6 +26,18 @@ b. Escopo do projeto
      - Interface que atenda as necessidades do profissional que irá utiliza-la (técnico de inspeção)
    - [Link do protótipo visual no canva](https://www.canva.com/design/DAF-v1TnDdw/y7BZAqdOR8OXGKZ0v_Uoow/edit?utm_content=DAF-v1TnDdw&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)  
 
+
+<h1>Matriz de riscos</h1>
+
+<table>
+  <tr>
+    <th>Risco</th>
+    <th>Probabilidade</th>
+    <th>Impacto</th>
+    <td>Impacto</td>
+
+  </tr>
+</table>
 <h1>Quant-UX<h1>
   
 [Link do protótipo visual no Quant-UX](https://app.quant-ux.com/#/test.html?h=a2aa10aOGwpjBgfFFBQx0cFbVmsiybto60yOwOMCKFcIyLVSe51ziWE7or3O&ln=en)  
