@@ -34,10 +34,53 @@ b. Escopo do projeto
     <th>Risco</th>
     <th>Probabilidade</th>
     <th>Impacto</th>
-    <td>Impacto</td>
+    <td>Mitigação</td>
+
+  </tr>
+  <tr>
+    <td>Atraso na entrega</td>
+    <td>4</td>
+    <td>5</td>
+    <td>Entregar o mais breve possível.</td>
+
+  </tr>
+   <tr>
+    <td>Não conclusão dos objetivos específicos</td>
+    <td>4</td>
+    <td>5</td>
+    <td>Focar em desenvolver os objetivos mais importantes para o funcionamento do projeto.</td>
+
+  </tr>
+    <tr>
+    <td>Banca insatisfeita com o projeto</td>
+    <td>4</td>
+    <td>4</td>
+    <td>Realizar os ajustes necessários.</td>
+
+  </tr>
+    <tr>
+    <td>Reprovação</td>
+    <td>3</td>
+    <td>5</td>
+    <td>Aceitar.</td>
+
+  </tr>
+    <tr>
+    <td>Limitação tecnológica</td>
+    <td>2</td>
+    <td>3</td>
+    <td>Procurar alguma outra que possa substituir ou que seja próxima o suficiente do desejado.</td>
+
+  </tr>
+    <tr>
+    <td>Cancelamento do projeto</td>
+    <td>1</td>
+    <td>5</td>
+    <td>Procurar alguma alternativa.</td>
 
   </tr>
 </table>
+
 <h1>Quant-UX<h1>
   
 [Link do protótipo visual no Quant-UX](https://app.quant-ux.com/#/test.html?h=a2aa10aOGwpjBgfFFBQx0cFbVmsiybto60yOwOMCKFcIyLVSe51ziWE7or3O&ln=en)  
