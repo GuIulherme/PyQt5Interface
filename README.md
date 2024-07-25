@@ -219,7 +219,7 @@ b. Escopo do projeto
   </tr>
 
   <tr>
-  <td>Apresentação SCiTec </td>
+  <td>Apresentação final </td>
     <td></td>
     <td></td>
     <td></td>
