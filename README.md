@@ -77,8 +77,8 @@ b. Escopo do projeto
     <td>1</td>
     <td>5</td>
     <td>Procurar alguma alternativa.</td>
-
   </tr>
+  
 </table>
 
 <h1>Quant-UX<h1>
@@ -134,7 +134,7 @@ b. Escopo do projeto
     <td></td>
   </tr>
   
-    <tr>
+  <tr>
     <td>Defesa Pré Projeto</td>
     <td></td>
     <td></td>
@@ -148,7 +148,7 @@ b. Escopo do projeto
     <td></td>
   </tr>
   
-    <tr>
+  <tr>
    <td>Implementação dos botões de comando</td>
     <td></td>
     <td>X</td>
@@ -161,6 +161,79 @@ b. Escopo do projeto
     <td></td>
     <td></td>
   </tr>
+  
+  <tr>
+   <td>Desenvolvimento da comunicação entre o drone e a estação de base </td>
+    <td></td>
+    <td></td>
+    <td>X</td>
+    <td>X</td>
+    <td>X</td>
+    <td>X</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  
+  <tr>
+   <td>Finalização do primeiro protótipo da interface de controle </td>
+    <td></td>
+    <td></td>
+    <td>X</td>
+    <td>X</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+
+  <tr>
+   <td>Apresentação SCiTec </td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>X</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+
+  <tr>
+   <td>Entrega do artigo final </td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>X</td>
+    <td>X</td>
+    <td>X</td>
+    <td>X</td>
+    <td>X</td>
+    <td>X</td>
+    <td>X</td>
+  </tr>
+
+  <tr>
+  <td>Apresentação SCiTec </td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>X</td>
+  </tr>
+
+
+
 
 </table>
 
