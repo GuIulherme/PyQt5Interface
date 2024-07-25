@@ -88,3 +88,70 @@ b. Escopo do projeto
 <h1>Diagrama de Atividades</h1>
 
 ![DA](DiagramaDeAtividades.drawio.png)
+
+<h1> Cronograma <h1>
+<table>
+  <tr>
+    <th>Atividades</th>
+    <th>Março</th>
+    <th>Abril</th>
+    <th>Maio</th>
+    <th>Junho</th>
+    <th>Julho</th>
+    <th>Agosto</th>
+    <th>Setembro</th>
+    <th>Outubro</th>
+    <th>Novembro</th>
+    <th>Dezembro</th>
+    
+  </tr>
+  <tr>
+    <td>Definição de design da interface</td>
+    <td>X</td>
+    <td>X</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+
+  </tr>
+   <tr>
+    <td>Não conclusão dos objetivos específicos</td>
+    <td>4</td>
+    <td>5</td>
+    <td>Focar em desenvolver os objetivos mais importantes para o funcionamento do projeto.</td>
+
+  </tr>
+    <tr>
+    <td>Banca insatisfeita com o projeto</td>
+    <td>4</td>
+    <td>4</td>
+    <td>Realizar os ajustes necessários.</td>
+
+  </tr>
+    <tr>
+    <td>Reprovação</td>
+    <td>3</td>
+    <td>5</td>
+    <td>Aceitar.</td>
+
+  </tr>
+    <tr>
+    <td>Limitação tecnológica</td>
+    <td>2</td>
+    <td>3</td>
+    <td>Procurar alguma outra que possa substituir ou que seja próxima o suficiente do desejado.</td>
+
+  </tr>
+    <tr>
+    <td>Cancelamento do projeto</td>
+    <td>1</td>
+    <td>5</td>
+    <td>Procurar alguma alternativa.</td>
+
+  </tr>
+</table>
