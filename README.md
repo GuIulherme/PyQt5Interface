@@ -90,6 +90,8 @@ b. Escopo do projeto
 ![DA](DiagramaDeAtividades.drawio.png)
 
 <h1> Cronograma </h1>
+
+
 <table>
   <tr>
     <th>Atividades</th>
@@ -103,8 +105,8 @@ b. Escopo do projeto
     <th>Outubro</th>
     <th>Novembro</th>
     <th>Dezembro</th>
-    
-  </tr>
+    </tr>
+  
   <tr>
     <td>Definição de design da interface</td>
     <td>X</td>
@@ -117,8 +119,8 @@ b. Escopo do projeto
     <td></td>
     <td></td>
     <td></td>
+    </tr>
 
-  </tr>
    <tr>
     <td>Entrega do Pré-Projeto</td>
     <td></td>
@@ -131,23 +133,21 @@ b. Escopo do projeto
     <td></td>
     <td></td>
     <td></td>
-
-
-  </tr>
-    <tr>
+    </tr>
+<tr>
     <td>Defesa Pré-Projeto</td>
     <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
     <td>X</td>
     <td></td>
     <td></td>
     <td></td>
     <td></td>
     <td></td>
+    </tr>
 
-  </tr>
     <tr>
     <td>Implementação dos botões de comando</td>
     <td></td>
@@ -160,8 +160,8 @@ b. Escopo do projeto
     <td></td>
     <td></td>
     <td></td>
+    </tr>
 
-  </tr>
     <tr>
     <td>Desenvolvimento da comunicação entre o drone e a estação de base</td>
     <td></td>
@@ -173,8 +173,8 @@ b. Escopo do projeto
     <td></td>
     <td></td>
     <td></td>
+    </tr>
 
-  </tr>
     <tr>
     <td>Finalização do primeiro protótipo da interface de controle</td>
     <td></td>
@@ -186,10 +186,10 @@ b. Escopo do projeto
     <td></td>
     <td></td>
     <td></td>
-      
     </tr>
+    
     <tr>
-    <td>Apresentação SCiTec/td>
+    <td>Apresentação SCiTec</td>
     <td></td>
     <td></td>
     <td></td>
@@ -199,8 +199,8 @@ b. Escopo do projeto
     <td>X</td>
     <td></td>
     <td></td>
-    
     </tr>
+    
     <tr>
     <td>Entrega do artigo final</td>
     <td></td>
@@ -212,10 +212,10 @@ b. Escopo do projeto
     <td>X</td>
     <td>X</td>
     <td>X</td>
-
-     </tr>
+    </tr>
+    
     <tr>
-    <td>Defesa do TCC/td>
+    <td>Defesa do TCC</td>
     <td></td>
     <td></td>
     <td></td>
@@ -225,6 +225,21 @@ b. Escopo do projeto
     <td></td>
     <td></td>
     <td>X</td>
-
-</tr>
+            
 </table>
+
+<h1> Organização da equipe </h1>
+
+  <p>A equipe, juntamente com o orientador, definiu as atividades a serem executadas por meio de uma segmentação de tarefas. Esta abordagem visa garantir uma distribuição eficaz das responsabilidades, permitindo uma gestão mais precisa e focada em cada componente do projeto. O plano prevê a divisão do projeto em três objetivos, correspondentes aos objetivos específicos estabelecidos. Cada um desses objetivos será abordado através de microprojetos, nos quais os membros da equipe se dedicaram de maneira concentrada e especializada.</p>
+  <p>Para garantir um progresso contínuo e alinhado, estão programadas reuniões semanais com o orientador e coorientador. Durante esses encontros, serão apresentados os avanços alcançados em relação aos objetivos estabelecidos, bem como as dificuldades e necessidades identificadas durante a execução de cada microprojeto. Essa troca de informações será fundamental para ajustes, resolução de problemas e otimização dos processos, visando sempre o resultado do projeto como um todo.</p>
+
+<h1> Responsabilidade dos membros da equipe </h1>
+
+- Guilherme
+<p>Responsável pelo front end da interface, assegurando a comunicação entre a câmera e a estação base, bem como o funcionamento dos botões de comando. Sua função é crucial para garantir que a interface do usuário seja intuitiva e eficiente, facilitando o controle e monitoramento do drone.</p> 
+
+- Ana
+<p>Responsável pela localização em tempo real do drone e pela disponibilização de informações essenciais para o usuário, como o nível da bateria e sinais de perigo. Sua função é vital para assegurar que o operador do drone esteja sempre ciente da sua posição e das condições operacionais, permitindo uma navegação segura e informada.</p>
+
+
+
