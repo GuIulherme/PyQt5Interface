@@ -291,7 +291,7 @@ b. Escopo do projeto
     <tr>
     <td>PyQt</td>
     <td>5</td>
-    <td>-</td>
+    <td>https://pypi.org/project/PyQt5/</td>
     <td>Framework para criação de interfaces que faz parte da biblioteca Qt.</td>
 
   </tr>
