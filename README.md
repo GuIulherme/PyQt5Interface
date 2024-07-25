@@ -241,5 +241,68 @@ b. Escopo do projeto
 - Ana
 <p>Responsável pela localização em tempo real do drone e pela disponibilização de informações essenciais para o usuário, como o nível da bateria e sinais de perigo. Sua função é vital para assegurar que o operador do drone esteja sempre ciente da sua posição e das condições operacionais, permitindo uma navegação segura e informada.</p>
 
+<h1> Recursos que serão utilizados </h1>
+
+<table>
+  <tr>
+    <th>Ferramentas</th>
+    <th>Versão</th>
+    <th>Localização</th>
+    <td>Descrição</td>
+
+  </tr>
+  <tr>
+    <td> Visual Studio Code</td>
+    <td>1.87.2</td>
+    <td>https://code.visualstudio.com/</td>
+    <td>Editor de código-fonte</td>
+
+  </tr>
+   <tr>
+    <td>Canva</td>
+    <td>-</td>
+    <td>https://www.canva.com/pt_br/</td>
+    <td>Prototipação das telas e edição de artes para a interface </td>
+
+  </tr>
+    <tr>
+    <td>Python</td>
+    <td>3.10.12</td>
+    <td>https://www.python.org/</td>
+    <td>Linguagem de programação</td>
+
+  </tr>
+    <tr>
+    <td>Qt</td>
+    <td>5</td>
+    <td>https://www.qt.io/qt-for-python</td>
+    <td>Biblioteca utilizada para criação de interfaces.</td>
+
+  </tr>
+    <tr>
+    <td>PyQt</td>
+    <td>5</td>
+    <td>-</td>
+    <td>Framework para criação de interfaces que faz parte da biblioteca Qt.</td>
+
+  </tr>
+    <tr>
+    <td>Ubuntu</td>
+    <td>22.2 LTS</td>
+    <td>https://ubuntu.com/</td>
+    <td>Sistema operacional.</td>
+
+  </tr>
+</table>
+
+<h1>Resultados esperados</h1>
+
+<p>Tanto o SIDEL quanto o projeto que está sendo realizado no LaRCA estão diretamente interligados, uma vez que, este projeto tem como responsabilidade o desenvolvido da interface de operação e controle inteligente para o drone que está sendo desenvolvido no Laboratório de Robótica e Computação Aplicada. Dessa forma, ao finalizar um projeto, o outro também será concluído, por conta disso, os resultados esperados vão além dos citados nos objetivos específicos, se tornando mais abrangente e tendo um impacto social que busca:</p>
+
+- Maior segurança durante a operação de drones durante a inspeção
+  
+- Diminuição no custo operacional
+  
+- Aumento de produtividade
 
 
