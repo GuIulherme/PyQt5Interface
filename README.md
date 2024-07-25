@@ -89,7 +89,7 @@ b. Escopo do projeto
 
 ![DA](DiagramaDeAtividades.drawio.png)
 
-<h1> Cronograma <h1>
+<h1> Cronograma </h1>
 <table>
   <tr>
     <th>Atividades</th>
@@ -120,38 +120,111 @@ b. Escopo do projeto
 
   </tr>
    <tr>
-    <td>Não conclusão dos objetivos específicos</td>
-    <td>4</td>
-    <td>5</td>
-    <td>Focar em desenvolver os objetivos mais importantes para o funcionamento do projeto.</td>
+    <td>Entrega do Pré-Projeto</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>X</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+
 
   </tr>
     <tr>
-    <td>Banca insatisfeita com o projeto</td>
-    <td>4</td>
-    <td>4</td>
-    <td>Realizar os ajustes necessários.</td>
+    <td>Defesa Pré-Projeto</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>X</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
 
   </tr>
     <tr>
-    <td>Reprovação</td>
-    <td>3</td>
-    <td>5</td>
-    <td>Aceitar.</td>
+    <td>Implementação dos botões de comando</td>
+    <td></td>
+    <td>X</td>
+    <td>X</td>
+    <td>X</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
 
   </tr>
     <tr>
-    <td>Limitação tecnológica</td>
-    <td>2</td>
-    <td>3</td>
-    <td>Procurar alguma outra que possa substituir ou que seja próxima o suficiente do desejado.</td>
+    <td>Desenvolvimento da comunicação entre o drone e a estação de base</td>
+    <td></td>
+    <td></td>
+    <td>X</td>
+    <td>X</td>
+    <td>X</td>
+    <td>X</td>
+    <td></td>
+    <td></td>
+    <td></td>
 
   </tr>
     <tr>
-    <td>Cancelamento do projeto</td>
-    <td>1</td>
-    <td>5</td>
-    <td>Procurar alguma alternativa.</td>
+    <td>Finalização do primeiro protótipo da interface de controle</td>
+    <td></td>
+    <td></td>
+    <td>X</td>
+    <td>X</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+      
+    </tr>
+    <tr>
+    <td>Apresentação SCiTec/td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>X</td>
+    <td></td>
+    <td></td>
+    
+    </tr>
+    <tr>
+    <td>Entrega do artigo final</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>X</td>
+    <td>X</td>
+    <td>X</td>
+    <td>X</td>
+    <td>X</td>
+    <td>X</td>
 
-  </tr>
+     </tr>
+    <tr>
+    <td>Defesa do TCC/td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>X</td>
+
+</tr>
 </table>
