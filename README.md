@@ -34,7 +34,7 @@ b. Escopo do projeto
     <th>Risco</th>
     <th>Probabilidade</th>
     <th>Impacto</th>
-    <td>Mitigação</td>
+    <th>Mitigação</th>
 
   </tr>
   <tr>
@@ -46,8 +46,8 @@ b. Escopo do projeto
   </tr>
    <tr>
     <td>Não conclusão dos objetivos específicos</td>
+    <td>2</td>
     <td>4</td>
-    <td>5</td>
     <td>Focar em desenvolver os objetivos mais importantes para o funcionamento do projeto.</td>
 
   </tr>
@@ -91,7 +91,6 @@ b. Escopo do projeto
 
 <h1> Cronograma </h1>
 
-
 <table>
   <tr>
     <th>Atividades</th>
@@ -105,7 +104,7 @@ b. Escopo do projeto
     <th>Outubro</th>
     <th>Novembro</th>
     <th>Dezembro</th>
-    </tr>
+  </tr>
   
   <tr>
     <td>Definição de design da interface</td>
@@ -119,10 +118,10 @@ b. Escopo do projeto
     <td></td>
     <td></td>
     <td></td>
-    </tr>
-
+  </tr>
+  
    <tr>
-    <td>Entrega do Pré-Projeto</td>
+   <td>Entrega do Pré-Projeto</td>
     <td></td>
     <td></td>
     <td></td>
@@ -133,99 +132,36 @@ b. Escopo do projeto
     <td></td>
     <td></td>
     <td></td>
-    </tr>
-<tr>
-    <td>Defesa Pré-Projeto</td>
+  </tr>
+  
+    <tr>
+    <td>Defesa Pré Projeto</td>
     <td></td>
-    <td> </td>
-    <td> </td>
-    <td> </td>
+    <td></td>
+    <td></td>
+    <td></td>
     <td>X</td>
     <td></td>
     <td></td>
     <td></td>
     <td></td>
     <td></td>
-    </tr>
+  </tr>
+  
+    <tr>
+   <td>Implementação dos botões de comando</td>
+    <td></td>
+    <td>X</td>
+    <td>X</td>
+    <td>X</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
 
-    <tr>
-    <td>Implementação dos botões de comando</td>
-    <td></td>
-    <td>X</td>
-    <td>X</td>
-    <td>X</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    </tr>
-
-    <tr>
-    <td>Desenvolvimento da comunicação entre o drone e a estação de base</td>
-    <td></td>
-    <td></td>
-    <td>X</td>
-    <td>X</td>
-    <td>X</td>
-    <td>X</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    </tr>
-
-    <tr>
-    <td>Finalização do primeiro protótipo da interface de controle</td>
-    <td></td>
-    <td></td>
-    <td>X</td>
-    <td>X</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    </tr>
-    
-    <tr>
-    <td>Apresentação SCiTec</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td>X</td>
-    <td></td>
-    <td></td>
-    </tr>
-    
-    <tr>
-    <td>Entrega do artigo final</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td>X</td>
-    <td>X</td>
-    <td>X</td>
-    <td>X</td>
-    <td>X</td>
-    <td>X</td>
-    </tr>
-    
-    <tr>
-    <td>Defesa do TCC</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td>X</td>
-            
 </table>
 
 <h1> Organização da equipe </h1>
