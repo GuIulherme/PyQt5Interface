@@ -87,7 +87,7 @@ b. Escopo do projeto
 
 <h1>Diagrama de Atividades</h1>
 
-![DA](DiagramaDeAtividade.drawio.png)
+![DA](imgs/DiagramaDeAtividades.drawio.png)
 
 <h1> Cronograma </h1>
 
