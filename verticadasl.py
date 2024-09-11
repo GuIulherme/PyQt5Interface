@@ -730,21 +730,19 @@ class Ui_MainWindow(object):
                     self.labelAerea1[i][j].setText("*" if [i, j] == self.cursor_positionA else " ")
 # Matriz vertical
 
-        self.asterisks = [
-            [1], [2], [3], [4], [5]
-        ]
-        self.cursor_positionV = 5
+        self.asterisks = []
+        self.cursor_positionV = 0
 
-        for vertical_index in range(len(self.asterisks)):
-            PosV = QLabel("@")
+        for vertical_index in range(5):
+            PosV = QLabel(" ")
             font = QtGui.QFont()
             font.setPointSize(27)  # Define o tamanho da fonte como 20 pontos
             PosV.setFont(font)
-            self.asterisks[vertical_index] = PosV  # Armazenar QLabel na lista    
+            self.asterisks.append(PosV)  # Armazenar QLabel na lista    
             self.gridLayout2.addWidget(PosV, vertical_index, 1)
         self.update_cursorV()
 
-#quero comitar 
+
 
 
 # MOVIMENTAÇÃO VERTICAL SUBIR E DESCER      
