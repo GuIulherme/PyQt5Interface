@@ -160,19 +160,19 @@ class Ui_MainWindow(object):
         self.frame_Vvertical.setContentsMargins(170, 0, 0, 0)
 
 # LABEL DO EMOJI DA TORRE
-        self.label = QtWidgets.QLabel(self.frame_Vvertical)
+        self.labelTorre = QtWidgets.QLabel(self.frame_Vvertical)
         font = QtGui.QFont()
         font.setPointSize(170)
-        self.label.setFont(font)
-        self.label.setObjectName("label")
+        self.labelTorre.setFont(font)
+        self.labelTorre.setObjectName("label")
         pixmap = QtGui.QPixmap("imgs/torre.png")
-        self.label.setGeometry(QtCore.QRect(190, 0, 421, 311))
+        self.labelTorre.setGeometry(QtCore.QRect(190, 0, 421, 311))
 
         pixmap = pixmap.scaled(200, 200, QtCore.Qt.KeepAspectRatio)  # Redimensiona para 200x150, mantendo a proporção
-        self.label.setPixmap(pixmap)
+        self.labelTorre.setPixmap(pixmap)
 
 ## GRID LAYOUT VERTICAL
-        self.gridLayout = QGridLayout(self.frame_Vvertical)
+        self.gridLayout2 = QGridLayout(self.frame_Vvertical)
 
 # LABEL 2
         self.label_2 = QtWidgets.QLabel(self.frame_Vvertical)
@@ -332,7 +332,7 @@ class Ui_MainWindow(object):
         font.setPointSize(15)
         self.BtFrente.setFont(font)
         self.BtFrente.setText("↑")
-        self.BtFrente.setObjectName("BtFrente")
+        self.BtFrente.clicked.connect(self.move_cursor_Straight)
 
         #self.timer1 = QTimer(MainWindow)
          #self.timer1.timeout.connect(self.incrementar_frente) 
@@ -361,7 +361,7 @@ class Ui_MainWindow(object):
         font.setPointSize(15)
         self.BtEsquerda.setFont(font)
         self.BtEsquerda.setText("←")
-        self.BtEsquerda.setObjectName("BtEsquerda")
+        self.BtEsquerda.clicked.connect(self.move_cursor_left)
 
        # self.timer4 = QTimer(MainWindow)
         # self.timer4.timeout.connect(self.incrementar_Esquerda)
@@ -385,7 +385,7 @@ class Ui_MainWindow(object):
         font.setPointSize(15)
         self.BtDireita.setFont(font)
         self.BtDireita.setText("→")
-        self.BtDireita.setObjectName("BtDireita")
+        self.BtDireita.clicked.connect(self.move_cursor_right)
 
      #   self.timer5 = QTimer(MainWindow)
         # self.timer5.timeout.connect(self.incrementar_Direita)
@@ -398,7 +398,7 @@ class Ui_MainWindow(object):
         font.setPointSize(15)
         self.BtSul.setFont(font)
         self.BtSul.setText("↓")
-        self.BtSul.setObjectName("BtSul")
+        self.BtSul.clicked.connect(self.move_cursor_South)
 
        # self.timer13 = QTimer(MainWindow)
          #self.timer13.timeout.connect(self.incrementar_Baixo)
@@ -580,7 +580,7 @@ class Ui_MainWindow(object):
         self.mapaIMG.setObjectName("mapaIMG")
 
 
-# VISAO AEREA
+# VISTA AEREA
         self.frame_vAerea = QtWidgets.QFrame(self.centralwidget)
         self.frame_vAerea.setGeometry(QtCore.QRect(210, 900, 611, 321))
         self.frame_vAerea.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -588,180 +588,24 @@ class Ui_MainWindow(object):
         self.frame_vAerea.setObjectName("frame_vAerea")
 
 
-        self.label_10 = QtWidgets.QLabel(self.frame_vAerea)
-        self.label_10.setGeometry(QtCore.QRect(120, 90, 211, 191))
+
+
+        #self.label_10.setGeometry(QtCore.QRect(120, 10, 500, 191))
+
+        self.frame_matrizV = QtWidgets.QFrame(self.frame_vAerea)
+        self.frame_matrizV.setGeometry(QtCore.QRect(220, 50, 250, 250))
+        self.gridLayout = QGridLayout(self.frame_matrizV)
+
+        self.label_10 = QtWidgets.QLabel(self.frame_matrizV)
         font = QtGui.QFont()
         font.setPointSize(180)
         self.label_10.setFont(font)
-        self.label_10.setObjectName("label_10")
-        self.label_11 = QtWidgets.QLabel(self.frame_vAerea)
-        self.label_11.setGeometry(QtCore.QRect(110, 60, 31, 31))
-        font = QtGui.QFont()
-        font.setPointSize(22)
-        self.label_11.setFont(font)
-        self.label_11.setObjectName("label_11")
-        self.label_12 = QtWidgets.QLabel(self.frame_vAerea)
-        self.label_12.setGeometry(QtCore.QRect(110, 120, 31, 31))
-        font = QtGui.QFont()
-        font.setPointSize(22)
-        self.label_12.setFont(font)
-        self.label_12.setObjectName("label_12")
-        self.label_13 = QtWidgets.QLabel(self.frame_vAerea)
-        self.label_13.setGeometry(QtCore.QRect(110, 90, 31, 31))
-        font = QtGui.QFont()
-        font.setPointSize(22)
-        self.label_13.setFont(font)
-        self.label_13.setObjectName("label_13")
-        self.label_14 = QtWidgets.QLabel(self.frame_vAerea)
-        self.label_14.setGeometry(QtCore.QRect(140, 270, 31, 31))
-        font = QtGui.QFont()
-        font.setPointSize(22)
-        self.label_14.setFont(font)
-        self.label_14.setObjectName("label_14")
-        self.label_15 = QtWidgets.QLabel(self.frame_vAerea)
-        self.label_15.setGeometry(QtCore.QRect(110, 270, 31, 31))
-        font = QtGui.QFont()
-        font.setPointSize(22)
-        self.label_15.setFont(font)
-        self.label_15.setObjectName("label_15")
-        self.label_16 = QtWidgets.QLabel(self.frame_vAerea)
-        self.label_16.setGeometry(QtCore.QRect(110, 240, 31, 31))
-        font = QtGui.QFont()
-        font.setPointSize(22)
-        self.label_16.setFont(font)
-        self.label_16.setObjectName("label_16")
-        self.label_17 = QtWidgets.QLabel(self.frame_vAerea)
-        self.label_17.setGeometry(QtCore.QRect(110, 210, 31, 31))
-        font = QtGui.QFont()
-        font.setPointSize(22)
-        self.label_17.setFont(font)
-        self.label_17.setObjectName("label_17")
-        self.label_18 = QtWidgets.QLabel(self.frame_vAerea)
-        self.label_18.setGeometry(QtCore.QRect(110, 180, 31, 31))
-        font = QtGui.QFont()
-        font.setPointSize(22)
-        self.label_18.setFont(font)
-        self.label_18.setObjectName("label_18")
-        self.label_19 = QtWidgets.QLabel(self.frame_vAerea)
-        self.label_19.setGeometry(QtCore.QRect(110, 150, 31, 31))
-        font = QtGui.QFont()
-        font.setPointSize(22)
-        self.label_19.setFont(font)
-        self.label_19.setObjectName("label_19")
-        self.label_20 = QtWidgets.QLabel(self.frame_vAerea)
-        self.label_20.setGeometry(QtCore.QRect(170, 270, 31, 31))
-        font = QtGui.QFont()
-        font.setPointSize(22)
-        self.label_20.setFont(font)
-        self.label_20.setObjectName("label_20")
-        self.label_21 = QtWidgets.QLabel(self.frame_vAerea)
-        self.label_21.setGeometry(QtCore.QRect(200, 270, 31, 31))
-        font = QtGui.QFont()
-        font.setPointSize(22)
-        self.label_21.setFont(font)
-        self.label_21.setObjectName("label_21")
-        self.label_22 = QtWidgets.QLabel(self.frame_vAerea)
-        self.label_22.setGeometry(QtCore.QRect(230, 270, 31, 31))
-        font = QtGui.QFont()
-        font.setPointSize(22)
-        self.label_22.setFont(font)
-        self.label_22.setObjectName("label_22")
-        self.label_23 = QtWidgets.QLabel(self.frame_vAerea)
-        self.label_23.setGeometry(QtCore.QRect(290, 270, 31, 31))
-        font = QtGui.QFont()
-        font.setPointSize(22)
-        self.label_23.setFont(font)
-        self.label_23.setObjectName("label_23")
-        self.label_24 = QtWidgets.QLabel(self.frame_vAerea)
-        self.label_24.setGeometry(QtCore.QRect(260, 270, 31, 31))
-        font = QtGui.QFont()
-        font.setPointSize(22)
-        self.label_24.setFont(font)
-        self.label_24.setObjectName("label_24")
-        self.label_25 = QtWidgets.QLabel(self.frame_vAerea)
-        self.label_25.setGeometry(QtCore.QRect(320, 270, 31, 31))
-        font = QtGui.QFont()
-        font.setPointSize(22)
-        self.label_25.setFont(font)
-        self.label_25.setObjectName("label_25")
-        self.label_26 = QtWidgets.QLabel(self.frame_vAerea)
-        self.label_26.setGeometry(QtCore.QRect(320, 210, 31, 31))
-        font = QtGui.QFont()
-        font.setPointSize(22)
-        self.label_26.setFont(font)
-        self.label_26.setObjectName("label_26")
-        self.label_27 = QtWidgets.QLabel(self.frame_vAerea)
-        self.label_27.setGeometry(QtCore.QRect(320, 240, 31, 31))
-        font = QtGui.QFont()
-        font.setPointSize(22)
-        self.label_27.setFont(font)
-        self.label_27.setObjectName("label_27")
-        self.label_28 = QtWidgets.QLabel(self.frame_vAerea)
-        self.label_28.setGeometry(QtCore.QRect(320, 180, 31, 31))
-        font = QtGui.QFont()
-        font.setPointSize(22)
-        self.label_28.setFont(font)
-        self.label_28.setObjectName("label_28")
-        self.label_29 = QtWidgets.QLabel(self.frame_vAerea)
-        self.label_29.setGeometry(QtCore.QRect(320, 150, 31, 31))
-        font = QtGui.QFont()
-        font.setPointSize(22)
-        self.label_29.setFont(font)
-        self.label_29.setObjectName("label_29")
-        self.label_30 = QtWidgets.QLabel(self.frame_vAerea)
-        self.label_30.setGeometry(QtCore.QRect(320, 120, 31, 31))
-        font = QtGui.QFont()
-        font.setPointSize(22)
-        self.label_30.setFont(font)
-        self.label_30.setObjectName("label_30")
-        self.label_31 = QtWidgets.QLabel(self.frame_vAerea)
-        self.label_31.setGeometry(QtCore.QRect(320, 60, 31, 31))
-        font = QtGui.QFont()
-        font.setPointSize(22)
-        self.label_31.setFont(font)
-        self.label_31.setObjectName("label_31")
-        self.label_32 = QtWidgets.QLabel(self.frame_vAerea)
-        self.label_32.setGeometry(QtCore.QRect(320, 90, 31, 31))
-        font = QtGui.QFont()
-        font.setPointSize(22)
-        self.label_32.setFont(font)
-        self.label_32.setObjectName("label_32")
-        self.label_33 = QtWidgets.QLabel(self.frame_vAerea)
-        self.label_33.setGeometry(QtCore.QRect(290, 60, 31, 31))
-        font = QtGui.QFont()
-        font.setPointSize(22)
-        self.label_33.setFont(font)
-        self.label_33.setObjectName("label_33")
-        self.label_34 = QtWidgets.QLabel(self.frame_vAerea)
-        self.label_34.setGeometry(QtCore.QRect(140, 60, 31, 31))
-        font = QtGui.QFont()
-        font.setPointSize(22)
-        self.label_34.setFont(font)
-        self.label_34.setObjectName("label_34")
-        self.label_35 = QtWidgets.QLabel(self.frame_vAerea)
-        self.label_35.setGeometry(QtCore.QRect(170, 60, 31, 31))
-        font = QtGui.QFont()
-        font.setPointSize(22)
-        self.label_35.setFont(font)
-        self.label_35.setObjectName("label_35")
-        self.label_36 = QtWidgets.QLabel(self.frame_vAerea)
-        self.label_36.setGeometry(QtCore.QRect(200, 60, 31, 31))
-        font = QtGui.QFont()
-        font.setPointSize(22)
-        self.label_36.setFont(font)
-        self.label_36.setObjectName("label_36")
-        self.label_37 = QtWidgets.QLabel(self.frame_vAerea)
-        self.label_37.setGeometry(QtCore.QRect(230, 60, 31, 31))
-        font = QtGui.QFont()
-        font.setPointSize(22)
-        self.label_37.setFont(font)
-        self.label_37.setObjectName("label_37")
-        self.label_38 = QtWidgets.QLabel(self.frame_vAerea)
-        self.label_38.setGeometry(QtCore.QRect(260, 60, 31, 31))
-        font = QtGui.QFont()
-        font.setPointSize(22)
-        self.label_38.setFont(font)
-        self.label_38.setObjectName("label_38")
+
+        self.gridLayout.addWidget(self.label_10, 0, 0, 8, 8)
+
+        
+
+   ######   
 
 
         self.label_53 = QtWidgets.QLabel(self.frame_vAerea)
@@ -812,39 +656,11 @@ class Ui_MainWindow(object):
         self.DangerHeast.setText(_translate("MainWindow", "⚠️"))
         self.label_57.setText(_translate("MainWindow", "Sensor horizontal"))
         self.label_10.setText(_translate("MainWindow", "☒"))
-        self.label_11.setText(_translate("MainWindow", "❇"))
-        self.label_12.setText(_translate("MainWindow", "❇"))
-        self.label_13.setText(_translate("MainWindow", "❇"))
-        self.label_14.setText(_translate("MainWindow", "❇"))
-        self.label_15.setText(_translate("MainWindow", "❇"))
-        self.label_16.setText(_translate("MainWindow", "❇"))
-        self.label_17.setText(_translate("MainWindow", "❇"))
-        self.label_18.setText(_translate("MainWindow", "❇"))
-        self.label_19.setText(_translate("MainWindow", "❇"))
-        self.label_20.setText(_translate("MainWindow", "❇"))
-        self.label_21.setText(_translate("MainWindow", "❇"))
-        self.label_22.setText(_translate("MainWindow", "❇"))
-        self.label_23.setText(_translate("MainWindow", "❇"))
-        self.label_24.setText(_translate("MainWindow", "❇"))
-        self.label_25.setText(_translate("MainWindow", "❇"))
-        self.label_26.setText(_translate("MainWindow", "❇"))
-        self.label_27.setText(_translate("MainWindow", "❇"))
-        self.label_28.setText(_translate("MainWindow", "❇"))
-        self.label_29.setText(_translate("MainWindow", "❇"))
-        self.label_30.setText(_translate("MainWindow", "❇"))
-        self.label_31.setText(_translate("MainWindow", "❇"))
-        self.label_32.setText(_translate("MainWindow", "❇"))
-        self.label_33.setText(_translate("MainWindow", "❇"))
-        self.label_34.setText(_translate("MainWindow", "❇"))
-        self.label_35.setText(_translate("MainWindow", "❇"))
-        self.label_36.setText(_translate("MainWindow", "❇"))
-        self.label_37.setText(_translate("MainWindow", "❇"))
-        self.label_38.setText(_translate("MainWindow", "❇"))
+
         self.label_53.setText(_translate("MainWindow", "Vista aérea"))
 
         self.expanded_camera = False
         self.expanded_infra = False
-        self.cursor_position = 5
 
  
 
@@ -855,32 +671,97 @@ class Ui_MainWindow(object):
         self.video_stream2 = VideoStream()
         self.video_stream2.frame_updated.connect(self.update_frame2)
 
+
+# Matriz aerea
+        self.matrizAerea = [
+            [1, 2, 3, 4, 5, 6, 7, 8],
+            [9, 0, 0, 0, 0, 0, 0, 1],
+            [2, 0, 0, 0, 0, 0, 0, 3],
+            [4, 0, 0, 0, 0, 0, 0, 5],
+            [6, 0, 0, 0, 0, 0, 0, 7],
+            [8, 0, 0, 0, 0, 0, 0, 9],
+            [1, 0, 0, 0, 0, 0, 0, 2],
+            [3, 4, 5, 6, 7, 8, 9, 1],
+        ]
+        self.cursor_positionA = [0, 0]  # [row, col]
+
+        self.labelAerea1 = [[None for _ in range(8)] for _ in range(8)]
+        for i in range(8):
+            for j in range(8):
+                labelAerea = QLabel(" " if self.matrizAerea[i][j] == 0 else "*")
+                font = QtGui.QFont()
+                font.setPointSize(20)
+                labelAerea.setFont(font)
+                self.labelAerea1[i][j] = labelAerea
+                labelAerea.setFixedWidth(20)
+                labelAerea.setFixedHeight(20)
+                self.gridLayout.addWidget(labelAerea, i, j)
+
+        self.update_cursorH()
+
+    def move_cursor_Straight(self):
+        new_row = max(0, self.cursor_positionA[0] - 1)
+        if self.matrizAerea[new_row][self.cursor_positionA[1]] != 0:
+            self.cursor_positionA[0] = new_row
+        self.update_cursorH()
+
+    def move_cursor_South(self):
+        new_row = min(7, self.cursor_positionA[0] + 1)
+        if self.matrizAerea[new_row][self.cursor_positionA[1]] != 0:
+            self.cursor_positionA[0] = new_row
+        self.update_cursorH()
+
+    def move_cursor_left(self):
+        new_col = max(0, self.cursor_positionA[1] - 1)
+        if self.matrizAerea[self.cursor_positionA[0]][new_col] != 0:
+            self.cursor_positionA[1] = new_col
+        self.update_cursorH()
+
+    def move_cursor_right(self):
+        new_col = min(7, self.cursor_positionA[1] + 1)
+        if self.matrizAerea[self.cursor_positionA[0]][new_col] != 0:
+            self.cursor_positionA[1] = new_col
+        self.update_cursorH()
+
+    def update_cursorH(self):
+        for i in range(8):
+            for j in range(8):
+                if self.matrizAerea[i][j] != 0:
+                    self.labelAerea1[i][j].setText("*" if [i, j] == self.cursor_positionA else " ")
 # Matriz vertical
-        self.asterisks = []
-        
-        for i in range(5):
-            PosV = QLabel("❇")
+
+        self.asterisks = [
+            [1], [2], [3], [4], [5]
+        ]
+        self.cursor_positionV = 5
+
+        for vertical_index in range(len(self.asterisks)):
+            PosV = QLabel("@")
             font = QtGui.QFont()
-            font.setPointSize(20)  # Define o tamanho da fonte como 20 pontos
+            font.setPointSize(27)  # Define o tamanho da fonte como 20 pontos
             PosV.setFont(font)
-            self.asterisks.append(PosV)
-            self.gridLayout.addWidget(PosV, i, 1)
-        self.update_cursor()
+            self.asterisks[vertical_index] = PosV  # Armazenar QLabel na lista    
+            self.gridLayout2.addWidget(PosV, vertical_index, 1)
+        self.update_cursorV()
+
+
+
 
 # MOVIMENTAÇÃO VERTICAL SUBIR E DESCER      
     
     def move_cursor_up(self):
-        self.cursor_position = max(0, self.cursor_position - 1)
-        self.update_cursor()
+        self.cursor_positionV = max(0, self.cursor_positionV - 1)
+        self.update_cursorV()
 
     def move_cursor_down(self):
-        self.cursor_position = min(len(self.asterisks) - 1, self.cursor_position + 1)
-        self.update_cursor()
+        self.cursor_positionV = min(len(self.asterisks) - 1, self.cursor_positionV + 1)
+        self.update_cursorV()
 
-    def update_cursor(self):
-        for i, label in enumerate(self.asterisks):
-            label.setText("*" if i == self.cursor_position else " ")
-
+    
+    def update_cursorV(self):
+        for label in self.asterisks:
+                label.setText(" ")  # Limpa o texto
+                self.asterisks[self.cursor_positionV].setText("❇")  # Define o asterisco na posição do cursor
 #    def VistaVerti(self):
 
 

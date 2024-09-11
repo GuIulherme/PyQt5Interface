@@ -42,12 +42,8 @@ class Rotas(QWidget):
 
 
         self.grid_layout.addWidget(self.button_right, 5, 1)
-
         self.grid_layout.addWidget(self.button_left, 6, 1)
-
-
         self.grid_layout.addWidget(self.button_up, 5, 0)
-
         self.grid_layout.addWidget(self.button_down, 6, 0)
 
 

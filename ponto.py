@@ -1,83 +1,111 @@
-import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QGridLayout
-from PyQt5.QtCore import Qt
+from PyQt5 import QtWidgets, QtGui, QtCore
+from PyQt5.QtWidgets import QLabel, QGridLayout, QPushButton, QWidget, QVBoxLayout, QFrame
+from PyQt5.QtGui import QPixmap
 
-class DeslocamentoMatriz(QWidget):
+
+class MovementSystem(QWidget):
     def __init__(self):
         super().__init__()
-        self.setGeometry(300, 300, 300, 300)
-        self.setWindowTitle("Deslocamento na Matriz")
+        self.initUI()
 
-        # Inicializar a matriz e a posição do asterisco
+    def initUI(self):
         self.matriz = [
-    [1, 2, 3, 4, 5, 6, 7, 8],
-
-    [9, 0, 0, 0, 0, 0, 0, 1],
-
-    [2, 0, 0, 0, 0, 0, 0, 3],
-
-    [4, 0, 0, 0, 0, 0, 0, 5],
-
-    [6, 0, 0, 0, 0, 0, 0, 7],
-
-    [8, 0, 0, 0, 0, 0, 0, 9],
-
-    [1, 0, 0, 0, 0, 0, 0, 2],
-
-    [3, 4, 5, 6, 7, 8, 9, 1],
+            [1, 2, 3, 4, 5, 6, 7, 8],
+            [9, 0, 0, 0, 0, 0, 0, 1],
+            [2, 0, 0, 0, 0, 0, 0, 3],
+            [4, 0, 0, 0, 0, 0, 0, 5],
+            [6, 0, 0, 0, 0, 0, 0, 7],
+            [8, 0, 0, 0, 0, 0, 0, 9],
+            [1, 0, 0, 0, 0, 0, 0, 2],
+            [3, 4, 5, 6, 7, 8, 9, 1]
         ]
-        self.posicao_x = 0
-        self.posicao_y = 0
 
-        # Criar um layout para organizar os labels
-        self.grid_layout = QGridLayout()
-        self.setLayout(self.grid_layout)
+        self.cursor_position = [0, 0]  # [row, col]
 
-        # Criar os labels para representar a matriz
-        self.labels = []
-        for i in range(8):
-            linha = []
-            for j in range(8):
-                label = QLabel(str(self.matriz[i][j]))
-                label.setAlignment(Qt.AlignCenter)
-                linha.append(label)
-                self.grid_layout.addWidget(label, i, j)
-            self.labels.append(linha)
+        # Criar um QFrame para a matriz
+        self.frame_matrix = QFrame(self)
+        self.frame_matrix.setFixedSize(300, 300)  # Tamanho fixo para o frame
+        self.gridLayout = QGridLayout(self.frame_matrix)
 
-        # Criar os botões de controle
-        self.botao_cima = QPushButton("Cima")
-        self.botao_baixo = QPushButton("Baixo")
-        self.botao_esquerda = QPushButton("Esquerda")
-        self.botao_direita = QPushButton("Direita")
+        self.labels = [[None for _ in range(8)] for _ in range(8)]
+        label_width = 20  # Largura desejada para o label (em pixels)
+        label_height = 20  # Altura desejada para o label (em pixels)
 
-        # Conectar os botões às funções de movimentação
-        self.botao_cima.clicked.connect(self.mover_cima)
-        self.botao_baixo.clicked.connect(self.mover_baixo)
-        self.botao_esquerda.clicked.connect(self.mover_esquerda)
-        self.botao_direita.clicked.connect(self.mover_direita)
+        self.image_label = QLabel(self.frame_matrix)
+        self.image_label.setText("☒")
+        font = QtGui.QFont()
+        font.setPointSize(220)
+        self.image_label.setFont(font)
+        #self.image_label.setGeometry(QtCore.QRect(120, 90, 500, 191))
+        self.gridLayout.addWidget(self.image_label, 0, 0, 8, 8)
 
-        # Adicionar os botões à interface
-        # ... (Você pode usar um layout para organizar os botões)
-
-        # Atualizar a interface inicialmente
-        self.atualizar_interface()
-
-    def atualizar_interface(self):
         for i in range(8):
             for j in range(8):
-                if i == self.posicao_y and j == self.posicao_x:
-                    self.labels[i][j].setText("*")
-                else:
-                    self.labels[i][j].setText(str(self.matriz[i][j]))
+                label = QLabel("*")
+                font = QtGui.QFont()
+                font.setPointSize(20)
+                label.setFont(font)
+                self.labels[i][j] = label
+                label.setFixedWidth(20)
+                label.setFixedHeight(20)
+                self.gridLayout.addWidget(label, i, j)
 
-    def mover_cima(self):
-        if self.posicao_y > 0 and self.matriz[self.posicao_y - 1][self.posicao_x] != 0:
-            self.posicao_y -= 1
-            self.atualizar_interface()
-    # ... funções mover_baixo, mover_esquerda, mover_direita de forma similar
+        self.update_cursor()
 
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    window = DeslocamentoMatriz()
+        # Botões de controle
+        self.btn_up = QPushButton("Up")
+        self.btn_down = QPushButton("Down")
+        self.btn_left = QPushButton("Left")
+        self.btn_right = QPushButton("Right")
+
+        self.btn_up.clicked.connect(self.move_cursor_up)
+        self.btn_down.clicked.connect(self.move_cursor_down)
+        self.btn_left.clicked.connect(self.move_cursor_left)
+        self.btn_right.clicked.connect(self.move_cursor_right)
+
+        vbox = QVBoxLayout()
+        vbox.addWidget(self.frame_matrix)  # Adicionar o frame da matriz
+        vbox.addWidget(self.btn_up)
+        vbox.addWidget(self.btn_down)
+        vbox.addWidget(self.btn_left)
+        vbox.addWidget(self.btn_right)
+
+        self.setLayout(vbox)
+
+    def move_cursor_up(self):
+        new_row = max(0, self.cursor_position[0] - 1)
+        if self.matriz[new_row][self.cursor_position[1]] != 0:
+            self.cursor_position[0] = new_row
+        self.update_cursor()
+
+    def move_cursor_down(self):
+        new_row = min(7, self.cursor_position[0] + 1)
+        if self.matriz[new_row][self.cursor_position[1]] != 0:
+            self.cursor_position[0] = new_row
+        self.update_cursor()
+
+    def move_cursor_left(self):
+        new_col = max(0, self.cursor_position[1] - 1)
+        if self.matriz[self.cursor_position[0]][new_col] != 0:
+            self.cursor_position[1] = new_col
+        self.update_cursor()
+
+    def move_cursor_right(self):
+        new_col = min(7, self.cursor_position[1] + 1)
+        if self.matriz[self.cursor_position[0]][new_col] != 0:
+            self.cursor_position[1] = new_col
+        self.update_cursor()
+
+    def update_cursor(self):
+        for i in range(8):
+            for j in range(8):
+                if self.matriz[i][j] != 0:
+                    self.labels[i][j].setText("*" if [i, j] == self.cursor_position else " ")
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    window = MovementSystem()
     window.show()
     sys.exit(app.exec_())
