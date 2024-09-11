@@ -804,7 +804,7 @@ class Ui_MainWindow(object):
 
     def update_frame2(self, pixmap):
        self.video_label2.setPixmap(pixmap)
-################################
+################################ aaa
 # Botões pra extender a camera normal
 
     def expand_camera(self):
