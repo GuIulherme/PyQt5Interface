@@ -154,8 +154,8 @@ class Ui_MainWindow(object):
 
         self.frame_Vvertical = QtWidgets.QFrame(self.centralwidget)
         self.frame_Vvertical.setGeometry(QtCore.QRect(650, 900, 431, 321))
-        self.frame_Vvertical.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_Vvertical.setFrameShadow(QtWidgets.QFrame.Raised)
+        #self.frame_Vvertical.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        #self.frame_Vvertical.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_Vvertical.setObjectName("frame_Vvertical")
         self.frame_Vvertical.setContentsMargins(170, 0, 0, 0)
 
@@ -195,6 +195,7 @@ class Ui_MainWindow(object):
         font.setPointSize(22)
         self.label_4.setFont(font)
         self.label_4.setObjectName("label_4")
+        
         self.label_5 = QtWidgets.QLabel(self.frame_Vvertical)
         self.label_5.setGeometry(QtCore.QRect(120, 160, 31, 31))
         font = QtGui.QFont()
@@ -730,16 +731,17 @@ class Ui_MainWindow(object):
                     self.labelAerea1[i][j].setText("*" if [i, j] == self.cursor_positionA else " ")
 # Matriz vertical
 
-        self.asterisks = []
-        self.cursor_positionV = 0
+        self.asterisks = [1, 2, 3, 4, 5]
+        self.cursor_positionV = 4
+        self.labels = [None for _ in range(len(self.asterisks))]
 
-        for vertical_index in range(5):
-            PosV = QLabel(" ")
+        for vertical_index in range(len(self.asterisks)):
+            PosV = QLabel(" " if self.asterisks [vertical_index] != 0 else "*")
             font = QtGui.QFont()
             font.setPointSize(27)  # Define o tamanho da fonte como 20 pontos
             PosV.setFont(font)
-            self.asterisks.append(PosV)  # Armazenar QLabel na lista    
-            self.gridLayout2.addWidget(PosV, vertical_index, 1)
+            self.labels[vertical_index] = PosV
+            self.gridLayout2.addWidget(PosV, vertical_index, 0)
         self.update_cursorV()
 
 
@@ -748,18 +750,26 @@ class Ui_MainWindow(object):
 # MOVIMENTAÇÃO VERTICAL SUBIR E DESCER      
     
     def move_cursor_up(self):
-        self.cursor_positionV = max(0, self.cursor_positionV - 1)
+        if self.cursor_positionV > 0:  # Verifica se não está na primeira posição
+         self.cursor_positionV -= 1
         self.update_cursorV()
 
     def move_cursor_down(self):
-        self.cursor_positionV = min(len(self.asterisks) - 1, self.cursor_positionV + 1)
+        if self.cursor_positionV < len(self.asterisks) - 1:  # Verifica se não está na última posição
+          self.cursor_positionV += 1
         self.update_cursorV()
 
     
     def update_cursorV(self):
-        for label in self.asterisks:
-                label.setText(" ")  # Limpa o texto
-                self.asterisks[self.cursor_positionV].setText("❇")  # Define o asterisco na posição do cursor
+        for vertical_index in range(len(self.asterisks)):
+            if vertical_index == self.cursor_positionV:
+                self.labels[vertical_index].setText("❇")  # Cursor na posição atual
+            else:
+                self.labels[vertical_index].setText(" ")  # Asterisco nas outras posições
+
+    
+
+
 #    def VistaVerti(self):
 
 
