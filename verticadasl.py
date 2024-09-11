@@ -744,7 +744,7 @@ class Ui_MainWindow(object):
             self.gridLayout2.addWidget(PosV, vertical_index, 1)
         self.update_cursorV()
 
-
+#mamcacaca
 
 
 # MOVIMENTAÇÃO VERTICAL SUBIR E DESCER      
