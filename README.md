@@ -87,7 +87,7 @@ b. Escopo do projeto
 
 <h1>Diagrama de Atividades</h1>
 
-![DA](imgs/DiagramaDeAtividades.drawio.png)
+![DA](imgs/DiagramaDeAtividades.png)
 
 <h1>Diagrama de Caso de Uso</h1>
 
