@@ -1,18 +1,93 @@
-from PyQt5.QtGui import QImage
-import cv2, imutils
-import numpy as np
-import numpy as np
+#!/usr/bin/env python3
+import rospy
+from cv_bridge import CvBridge, CvBridgeError
+from sensor_msgs.msg import Image
+from geometry_msgs.msg import Twist
+from std_msgs.msg import String, Empty
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QLabel
-from PyQt5.QtCore import QThread, pyqtSignal
+from cv_bridge import CvBridge, CvBridgeError
+from PyQt5.QtWidgets import QLabel, QPushButton, QGridLayout
+from PyQt5.QtCore import QTimer,pyqtSignal, QThread
 from PyQt5.QtGui import QImage, QPixmap
-from PyQt5.QtWidgets import QGridLayout
-from videostream import VideoStream
+import cv2
+import sys
+
+class ROSAdapter:
+    def __init__(self):
+   
+        rospy.init_node('interface_drone')
+        self.vel_pub = rospy.Publisher("/velocidade_manual", Twist, queue_size=10)
+        self.mark_pub = rospy.Publisher('/marca', String, queue_size=10)
+        self.takeoff_pub = rospy.Publisher('/bebop/takeoff', Empty, queue_size=10)
+        self.start_pub = rospy.Publisher("/start", Empty, queue_size=10)
+        self.image_sub = rospy.Subscriber("/bebop2/camera_base/image_raw", Image, self.image_callback)
+        self.bridge = CvBridge()
+        self.image = None
+
+        self.has_takeoff = False
+
+    def move(self, x=0, y=0, z=0, yaw=0):
+        velocidade = Twist()
+        velocidade.linear.x = x
+        velocidade.linear.y = y
+        velocidade.linear.z = z
+        velocidade.angular.z = yaw
+        self.vel_pub.publish(velocidade)
+
+    def stop(self):
+        self.vel_pub.publish(Twist())
+
+    def set_mark(self):
+        self.mark_pub.publish("marca")
+
+    def start_drone(self):
+        msg = Empty()
+        if not self.has_takeoff:
+            self.takeoff_pub.publish(msg)
+            self.has_takeoff = True
+        else:
+            self.start_pub.publish(msg)
+
+    def image_callback(self, data):
+        try:
+            cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
+            self.image = cv_image
+        except CvBridgeError as e:
+            print(e)
+
+class CustomButton(QtWidgets.QPushButton):
+    def __init__(self, parent, text, aleft, atop, awidth, aheight,
+                 use_clicked=False, action=lambda: CustomButton.do_nothing):
+        super().__init__(parent)
+        self.setGeometry(QtCore.QRect(aleft, atop, awidth, aheight))
+        
+        font = QtGui.QFont()
+        font.setPointSize(15)  # Ajuste o tamanho da fonte conforme necessário
+        self.setFont(font)
+        self.setText(text)
+
+        if use_clicked:
+            self.clicked.connect(action)
+        else:
+            self.pressed.connect(action)
+            self.released.connect(ros_adapter.stop)
+
+    def do_nothing(self):
+        pass
 
 class Ui_MainWindow(object):
+
+    def __init__(self, ros_adapter):
+        super().__init__()
+
+        self.ros_interface = ros_adapter
+
     def setupUi(self, MainWindow):
+
+
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1100, 1861)
+
 
 
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -29,22 +104,18 @@ class Ui_MainWindow(object):
 
 
 # BOTÃO PARA COMEÇAR A TRANSMISSÃO DE VIDEO
-        self.pushButton_start = QtWidgets.QPushButton("Iniciar", self.CameraNormal)
-        self.pushButton_start.setGeometry(QtCore.QRect(230, 50, 90, 25))
-        self.pushButton_start.setObjectName("pushButton_start")
-        self.pushButton_start.clicked.connect(self.start_stream)
-        
+
+        self.pushButton_start = CustomButton(self.CameraNormal, "Iniciar", 230, 50, 90, 25, use_clicked=True)
 
 # BOTÃO PARA TERMINAR A TRANSMISSÃO
         self.pushButton_end = QtWidgets.QPushButton("Parar transmissão", self.CameraNormal)
         self.pushButton_end.setGeometry(QtCore.QRect(200, 77, 140, 30))
         self.pushButton_end.setObjectName("pushButton_end")
-        self.pushButton_end.clicked.connect(self.end_stream)
 
 
 # LABEL AGUARDANDO TRANSMISSÃO
         self.video_label = QLabel(self.CameraNormal)
-        self.video_label.setGeometry(QtCore.QRect(10, 120, 498, 425))  # Defina as coordenadas e tamanho conforme necessário
+        self.video_label.setGeometry(QtCore.QRect(10, 120, 498, 425))  
         self.video_label.setText("Aguardando transmissão...")
         self.video_label.setStyleSheet("background-color: lightgreen") 
 
@@ -132,19 +203,17 @@ class Ui_MainWindow(object):
         self.pushButton_start2 = QtWidgets.QPushButton("Iniciar", self.CameraTermic)
         self.pushButton_start2.setGeometry(QtCore.QRect(230, 50, 90, 25))
         self.pushButton_start2.setObjectName("pushButton_start")
-        self.pushButton_start2.clicked.connect(self.start_stream)
         
 
 # BOTÃO PARA TERMINAR A TRANSMISSÃO
         self.pushButton_end2 = QtWidgets.QPushButton("Parar transmissão", self.CameraTermic)
         self.pushButton_end2.setGeometry(QtCore.QRect(200, 77, 140, 30))
         self.pushButton_end2.setObjectName("pushButton_end")
-        self.pushButton_end2.clicked.connect(self.end_stream2)
 
 
 # LABEL AGUARDANDO TRANSMISSÃO
         self.video_label2 = QLabel(self.CameraTermic)
-        self.video_label2.setGeometry(QtCore.QRect(42, 120, 490, 425))  # Defina as coordenadas e tamanho conforme necessário
+        self.video_label2.setGeometry(QtCore.QRect(42, 120, 490, 425))
         self.video_label2.setText("Aguardando transmissão...")
         self.video_label2.setStyleSheet("background-color: lightgreen") 
 
@@ -154,8 +223,6 @@ class Ui_MainWindow(object):
 
         self.frame_Vvertical = QtWidgets.QFrame(self.centralwidget)
         self.frame_Vvertical.setGeometry(QtCore.QRect(650, 900, 431, 321))
-        #self.frame_Vvertical.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        #self.frame_Vvertical.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_Vvertical.setObjectName("frame_Vvertical")
         self.frame_Vvertical.setContentsMargins(170, 0, 0, 0)
 
@@ -164,11 +231,10 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(170)
         self.labelTorre.setFont(font)
-        self.labelTorre.setObjectName("label")
         pixmap = QtGui.QPixmap("imgs/torre.png")
         self.labelTorre.setGeometry(QtCore.QRect(190, 0, 421, 311))
 
-        pixmap = pixmap.scaled(200, 200, QtCore.Qt.KeepAspectRatio)  # Redimensiona para 200x150, mantendo a proporção
+        pixmap = pixmap.scaled(200, 200, QtCore.Qt.KeepAspectRatio)
         self.labelTorre.setPixmap(pixmap)
 
 ## GRID LAYOUT VERTICAL
@@ -239,229 +305,91 @@ class Ui_MainWindow(object):
         self.frame_controles.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_controles.setObjectName("frame_controles")
 
-        self.BtDescer = QtWidgets.QPushButton(self.frame_controles)
-        self.BtDescer.setGeometry(QtCore.QRect(510, 350, 71, 71))
-        font = QtGui.QFont()
-        font.setPointSize(15)
-        self.BtDescer.setFont(font)
-        self.BtDescer.setText("Descer")
-        self.BtDescer.setObjectName("BtDescer")
+
+
+        self.BtDescer = CustomButton(self.frame_controles, "Descer", 510, 350, 71, 71, False, 
+        action=lambda: self.ros_interface.move(z=-self.linear_z_vel))
         self.BtDescer.clicked.connect(self.move_cursor_down)
 
-        #self.timer13 = QTimer(MainWindow)
-        #self.timer13.timeout.connect(self.incrementar_Baixo)
-      #  self.BtDescer.pressed.connect(self.start_Baixo)
-       # self.BtDescer.released.connect(self.stop_Baixo)
-
-
-        self.BtOvo = QtWidgets.QPushButton(self.frame_controles)
-        self.BtOvo.setGeometry(QtCore.QRect(510, 270, 71, 71))
-        font = QtGui.QFont()
-        font.setPointSize(15)
-
-        self.BtOvo.setFont(font)
-        self.BtOvo.setText("O")
-        self.BtOvo.setObjectName("BtOvo")
-       # self.BtOvo.clicked.connect(self.botar_ovo)
-
-
-
-        self.BtHorario = QtWidgets.QPushButton(self.frame_controles)
-        self.BtHorario.setGeometry(QtCore.QRect(590, 270, 71, 71))
-        font = QtGui.QFont()
-        font.setPointSize(15)
-        self.BtHorario.setFont(font)
-        self.BtHorario.setText("⟳")
-        self.BtHorario.setObjectName("BtHorario")
         
-        #self.timer12 = QTimer(MainWindow)
-         #self.timer12.timeout.connect(self.incrementar_Horario)
-         #self.BtHorario.pressed.connect(self.start_Horario)
-       #  self.BtHorario.released.connect(self.stop_Horario)   
+        self.BtOvo = CustomButton(self.frame_controles, "O", 510, 270, 71, 71, True, 
+        action=lambda: self.ros_interface.set_mark())
+
+
+        self.BtStart = CustomButton(self.frame_controles, "Start", 160, 260, 71, 71,
+        True, action=lambda: self.ros_interface.start_drone())
 
 
 
-        self.BtAntihorario = QtWidgets.QPushButton(self.frame_controles)
-        self.BtAntihorario.setGeometry(QtCore.QRect(430, 270, 71, 71))
-        font = QtGui.QFont()
-        font.setPointSize(15)
-        self.BtAntihorario.setFont(font)
-        self.BtAntihorario.setText("⟲")
-        self.BtAntihorario.setObjectName("BtAntihorario")
-
-        #self.timer11 = QTimer(MainWindow)
-         #self.timer11.timeout.connect(self.incrementar_Antihorario)
-         #self.BtAntihorario.pressed.connect(self.start_Antihorario)
-         #self.BtAntihorario.released.connect(self.stop_Antihorario)  
+        self.BtHorario = CustomButton(self.frame_controles, "⟳", 590, 270, 71, 71, False, 
+        action=lambda: self.ros_interface.move(yaw=-self.angular_vel))
 
 
-        self.BtSubir = QtWidgets.QPushButton(self.frame_controles)
-        self.BtSubir.setGeometry(QtCore.QRect(510, 190, 71, 71))
-        font = QtGui.QFont()
-        font.setPointSize(15)
-        self.BtSubir.setFont(font)
-        self.BtSubir.setText("Subir")
-        self.BtSubir.setObjectName("BtSubir")
+
+        self.BtAntihorario = CustomButton(self.frame_controles, "⟲", 430, 270, 71, 71, False, 
+        action=lambda: self.ros_interface.move(yaw=self.angular_vel))
+
+
+
+        self.BtSubir = CustomButton(self.frame_controles, "Subir", 510, 190, 71, 71, False, 
+        action=lambda: self.ros_interface.move(z=self.linear_z_vel))
         self.BtSubir.clicked.connect(self.move_cursor_up)
 
 
-        #self.timer9 = QTimer(MainWindow)
-         #self.timer9.timeout.connect(self.incrementar_Cima)
-         #self.BtSubir.pressed.connect(self.start_Cima)
-         #self.BtSubir.released.connect(self.stop_Cima)    
+        self.BtNoroeste = CustomButton(self.frame_controles, "↖", 80, 180, 71, 71, False, 
+        action=lambda: self.ros_interface.move(x=self.linear_vel, y=-self.linear_vel))
 
 
-
-        self.BtNoroeste = QtWidgets.QPushButton(self.frame_controles)
-        self.BtNoroeste.setGeometry(QtCore.QRect(80, 180, 71, 71))
-        font = QtGui.QFont()
-        font.setPointSize(15)
-        self.BtNoroeste.setFont(font)
-        self.BtNoroeste.setText("↖")
-        self.BtNoroeste.setObjectName("BtNoroeste")
-
-       # self.timer3 = QTimer(MainWindow)
-        # self.timer3.timeout.connect(self.incrementar_diagonalEsquerdo_Frente)
-        # self.BtNoroeste.pressed.connect(self.start_diagonalEsquerdo_Frente)
-        # self.BtNoroeste.released.connect(self.stop_diagonalEsquerdo_Frente)
-
-
-
-        self.BtFrente = QtWidgets.QPushButton(self.frame_controles)
-        self.BtFrente.setGeometry(QtCore.QRect(160, 180, 71, 71))
-        font = QtGui.QFont()
-        font.setPointSize(15)
-        self.BtFrente.setFont(font)
-        self.BtFrente.setText("↑")
+        self.BtFrente = CustomButton(self.frame_controles, "↑", 160, 180, 71, 71, False, 
+        action=lambda: self.ros_interface.move(x=self.linear_vel))
         self.BtFrente.clicked.connect(self.move_cursor_Straight)
 
-        #self.timer1 = QTimer(MainWindow)
-         #self.timer1.timeout.connect(self.incrementar_frente) 
-        # self.BtFrente.pressed.connect(self.start_increment_frente)
-         # self.BtFrente.released.connect(self.stop_increment_frente)
+
+        self.BtNordeste = CustomButton(self.frame_controles, "↗", 240, 180, 71, 71, False, 
+        action=lambda: self.ros_interface.move(x=self.linear_vel, y=-self.linear_vel))
 
 
 
-        self.BtNordeste = QtWidgets.QPushButton(self.frame_controles)
-        self.BtNordeste.setGeometry(QtCore.QRect(240, 180, 71, 71))
-        font = QtGui.QFont()
-        font.setPointSize(15)
-        self.BtNordeste.setFont(font)
-        self.BtNordeste.setText("↗")
-        self.BtNordeste.setObjectName("BtNordeste")
 
-      #  self.timer2 = QTimer(MainWindow)
-        # self.timer2.timeout.connect(self.incrementar_diagonalDireito_Frente)
-        # self.BtNordeste.pressed.connect(self.start_diagonalDireito_Frente)
-         # self.BtNordeste.released.connect(self.stop_diagonalDireito_Frente)
-
-
-        self.BtEsquerda = QtWidgets.QPushButton(self.frame_controles)
-        self.BtEsquerda.setGeometry(QtCore.QRect(80, 260, 71, 71))
-        font = QtGui.QFont()
-        font.setPointSize(15)
-        self.BtEsquerda.setFont(font)
-        self.BtEsquerda.setText("←")
+        self.BtEsquerda = CustomButton(self.frame_controles, "←", 80, 260, 71, 71, False, 
+        action=lambda: self.ros_interface.move(y=self.linear_vel))
         self.BtEsquerda.clicked.connect(self.move_cursor_left)
 
-       # self.timer4 = QTimer(MainWindow)
-        # self.timer4.timeout.connect(self.incrementar_Esquerda)
-        # self.BtEsquerda.pressed.connect(self.start_Esquerda)
-         # self.BtEsquerda.released.connect(self.stop_Esquerda) 
 
 
-        self.BtStop = QtWidgets.QPushButton(self.frame_controles)
-        self.BtStop.setGeometry(QtCore.QRect(160, 260, 71, 71))
-        font = QtGui.QFont()
-        font.setPointSize(15)
-        self.BtStop.setFont(font)
-        self.BtStop.setText("Stop")
-        self.BtStop.setObjectName("BtStop")
 
-     #    self.BtStop.clicked.connect(self.stop_Button)
+        self.BtNoroeste = CustomButton(self.frame_controles, "↖", 80, 180, 71, 71, False, 
+        action=lambda: self.ros_interface.move(x=self.linear_vel, y=-self.linear_vel))
 
-        self.BtDireita = QtWidgets.QPushButton(self.frame_controles)
-        self.BtDireita.setGeometry(QtCore.QRect(240, 260, 71, 71))
-        font = QtGui.QFont()
-        font.setPointSize(15)
-        self.BtDireita.setFont(font)
-        self.BtDireita.setText("→")
+
+        self.BtDireita = CustomButton(self.frame_controles, "→", 240, 260, 71, 71, False, 
+        action=lambda: self.ros_interface.move(y=-self.linear_vel))
         self.BtDireita.clicked.connect(self.move_cursor_right)
 
-     #   self.timer5 = QTimer(MainWindow)
-        # self.timer5.timeout.connect(self.incrementar_Direita)
-         #self.BtDireita.pressed.connect(self.start_Direita)
-         #self.BtDireita.released.connect(self.stop_Direita)      
 
-        self.BtSul = QtWidgets.QPushButton(self.frame_controles)
-        self.BtSul.setGeometry(QtCore.QRect(160, 340, 71, 71))
-        font = QtGui.QFont()
-        font.setPointSize(15)
-        self.BtSul.setFont(font)
-        self.BtSul.setText("↓")
+        self.BtSul = CustomButton(self.frame_controles, "↓", 160, 340, 71, 71, False, 
+        action=lambda: self.ros_interface.move(x=-self.linear_vel))
         self.BtSul.clicked.connect(self.move_cursor_South)
 
-       # self.timer13 = QTimer(MainWindow)
-         #self.timer13.timeout.connect(self.incrementar_Baixo)
-        # self.BtSul.pressed.connect(self.start_Baixo)
-         #self.BtSul.released.connect(self.stop_Baixo)  
-
-        self.BtSudoeste = QtWidgets.QPushButton(self.frame_controles)
-        self.BtSudoeste.setGeometry(QtCore.QRect(80, 340, 71, 71))
-        font = QtGui.QFont()
-        font.setPointSize(15)
-        self.BtSudoeste.setFont(font)
-        self.BtSudoeste.setText("↙")
-        self.BtSudoeste.setObjectName("BtSudoeste")
-
-        #self.timer8 = QTimer(MainWindow)
-         #self.timer8.timeout.connect(self.incrementar_diagonalEsquerdo_Tras)
-         #self.BtSudoeste.pressed.connect(self.start_diagonalEsquerdo_Tras)
-        # self.BtSudoeste.released.connect(self.stop_diagonalEsquerdo_Tras) 
+        #self.BtSudoeste = self.create_button(self.frame_controles, "↙", 80, 340, 71, 71, 15)
+       # self.BtSudoeste.pressed.connect(lambda: self.ros_interface.move(x = -0.5, y = 0.5))
+        #self.BtSudoeste.released.connect(lambda: self.ros_interface.stop())
+        self.BtSudoeste = CustomButton(self.frame_controles, "↙", 80, 340, 71, 71, False, 
+        action=lambda: self.ros_interface.move(x=-self.linear_vel, y=self.linear_vel))
 
 
-        self.BtSudeste = QtWidgets.QPushButton(self.frame_controles)
-        self.BtSudeste.setGeometry(QtCore.QRect(240, 340, 71, 71))
-        font = QtGui.QFont()
-        font.setPointSize(15)
-        self.BtSudeste.setFont(font)
-        self.BtSudeste.setText("↘")
-        self.BtSudeste.setObjectName("BtSudeste")
+        self.BtSudoeste = CustomButton(self.frame_controles, "↘", 240, 340, 71, 71, False, 
+        action=lambda: self.ros_interface.move(x=-self.linear_vel, y=-self.linear_vel))
 
-       # self.timer7 = QTimer(MainWindow)
-        # self.timer7.timeout.connect(self.incrementar_diagonalDireito_Tras)
-        # self.BtSudeste.pressed.connect(self.start_diagonalDireito_Tras)
-         #self.BtSudeste.released.connect(self.stop_diagonalDireito_Tras) 
+        self.BtCameraBaixo = CustomButton(self.frame_controles, "↓", 870, 340, 71, 71)
+
+        self.BtCameraDireita = CustomButton(self.frame_controles, "→", 950, 270, 71, 71)
+
+        self.BtCameraEsquerda = CustomButton(self.frame_controles, "←", 790, 270, 71, 71)
+
+        self.BtCameraFrente = CustomButton(self.frame_controles, "↑", 870, 190, 71, 71)
 
 
-        self.BtCameraBaixo = QtWidgets.QPushButton(self.frame_controles)
-        self.BtCameraBaixo.setGeometry(QtCore.QRect(870, 340, 71, 71))
-        font = QtGui.QFont()
-        font.setPointSize(15)
-        self.BtCameraBaixo.setFont(font)
-        self.BtCameraBaixo.setText("↓")
-        self.BtCameraBaixo.setObjectName("BtCameraBaixo")
-        self.BtCameraDireita = QtWidgets.QPushButton(self.frame_controles)
-        self.BtCameraDireita.setGeometry(QtCore.QRect(950, 270, 71, 71))
-        font = QtGui.QFont()
-        font.setPointSize(15)
-        self.BtCameraDireita.setFont(font)
-        self.BtCameraDireita.setText("→")
-        self.BtCameraDireita.setObjectName("BtCameraDireita")
-        self.BtCameraEsquerda = QtWidgets.QPushButton(self.frame_controles)
-        self.BtCameraEsquerda.setGeometry(QtCore.QRect(790, 270, 71, 71))
-        font = QtGui.QFont()
-        font.setPointSize(15)
-        self.BtCameraEsquerda.setFont(font)
-        self.BtCameraEsquerda.setText("←")
-        self.BtCameraEsquerda.setObjectName("BtCameraEsquerda")
-        self.BtCameraFrente = QtWidgets.QPushButton(self.frame_controles)
-        self.BtCameraFrente.setGeometry(QtCore.QRect(870, 190, 71, 71))
-        font = QtGui.QFont()
-        font.setPointSize(15)
-        self.BtCameraFrente.setFont(font)
-        self.BtCameraFrente.setText("↑")
-        self.BtCameraFrente.setObjectName("BtCameraFrente")
         self.label_40 = QtWidgets.QLabel(self.frame_controles)
         self.label_40.setGeometry(QtCore.QRect(860, 70, 81, 61))
         font = QtGui.QFont()
@@ -480,27 +408,8 @@ class Ui_MainWindow(object):
         font.setPointSize(17)
         self.label_54.setFont(font)
         self.label_54.setObjectName("label_54")
-        self.BtCameraEsquerda.raise_()
-        self.BtDescer.raise_()
-        self.BtOvo.raise_()
-        self.BtHorario.raise_()
-        self.BtAntihorario.raise_()
-        self.BtSubir.raise_()
-        self.BtNoroeste.raise_()
-        self.BtFrente.raise_()
-        self.BtNordeste.raise_()
-        self.BtEsquerda.raise_()
-        self.BtStop.raise_()
-        self.BtDireita.raise_()
-        self.BtSul.raise_()
-        self.BtSudoeste.raise_()
-        self.BtSudeste.raise_()
-        self.BtCameraBaixo.raise_()
-        self.BtCameraDireita.raise_()
-        self.BtCameraFrente.raise_()
-        self.label_40.raise_()
-        self.label_52.raise_()
-        self.label_54.raise_()
+
+
         self.frame_sensorV = QtWidgets.QFrame(self.centralwidget)
         self.frame_sensorV.setGeometry(QtCore.QRect(550, 550, 211, 351))
         self.frame_sensorV.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -527,18 +436,22 @@ class Ui_MainWindow(object):
         self.label_56.setGeometry(QtCore.QRect(30, 0, 161, 51))
         font = QtGui.QFont()
         font.setPointSize(17)
+
         self.label_56.setFont(font)
         self.label_56.setObjectName("label_56")
+        
         self.frame_sensorH = QtWidgets.QFrame(self.centralwidget)
         self.frame_sensorH.setGeometry(QtCore.QRect(760, 550, 321, 351))
         self.frame_sensorH.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_sensorH.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_sensorH.setObjectName("frame_sensorH")
+
         self.label_44 = QtWidgets.QLabel(self.frame_sensorH)
         self.label_44.setGeometry(QtCore.QRect(80, 110, 141, 161))
         self.label_44.setText("")
         self.label_44.setPixmap(QtGui.QPixmap("imgs/drone_flying_camera_surveillance_aviation_icon_134041(1).png"))
         self.label_44.setObjectName("label_44")
+
         self.DangerHbaixo = QtWidgets.QLabel(self.frame_sensorH)
         self.DangerHbaixo.setGeometry(QtCore.QRect(110, 260, 61, 51))
         font = QtGui.QFont()
@@ -637,13 +550,6 @@ class Ui_MainWindow(object):
         self.label_42.setText(_translate("MainWindow", "100%"))
         self.pushButton_2.setText(_translate("MainWindow", "←"))
         self.label_62.setText(_translate("MainWindow", "Câmera Térmica"))
-
-
-
-
-
-
-
         self.label_55.setText(_translate("MainWindow", "Vista vertical"))
         self.label_40.setText(_translate("MainWindow", "Camera"))
         self.label_52.setText(_translate("MainWindow", "Controle direcional"))
@@ -657,23 +563,28 @@ class Ui_MainWindow(object):
         self.DangerHeast.setText(_translate("MainWindow", "⚠️"))
         self.label_57.setText(_translate("MainWindow", "Sensor horizontal"))
         self.label_10.setText(_translate("MainWindow", "☒"))
-
         self.label_53.setText(_translate("MainWindow", "Vista aérea"))
+
 
         self.expanded_camera = False
         self.expanded_infra = False
 
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.update_image)
+        self.timer.start(30)
+
+        self.linear_vel = 0.5
+        self.linear_z_vel = 0.5
+        self.angular_vel = 1.0
+
  
 
-# Inicializa o objeto de transmissão de vídeo
-        self.video_stream = VideoStream()
-        self.video_stream.frame_updated.connect(self.update_frame)
 
-        self.video_stream2 = VideoStream()
-        self.video_stream2.frame_updated.connect(self.update_frame2)
 
 
 # Matriz aerea
+        self.labelAerea1 = [[None for _ in range(8)] for _ in range(8)]
+
         self.matrizAerea = [
             [1, 2, 3, 4, 5, 6, 7, 8],
             [9, 0, 0, 0, 0, 0, 0, 1],
@@ -685,20 +596,38 @@ class Ui_MainWindow(object):
             [3, 4, 5, 6, 7, 8, 9, 1],
         ]
         self.cursor_positionA = [0, 0]  # [row, col]
+        self.cursor_positionV = 4
 
-        self.labelAerea1 = [[None for _ in range(8)] for _ in range(8)]
+        self.asterisks = [1, 2, 3, 4, 5]
+        self.labels = [None for _ in range(len(self.asterisks))]
+
         for i in range(8):
             for j in range(8):
-                labelAerea = QLabel(" " if self.matrizAerea[i][j] == 0 else "*")
+                labelAerea = QtWidgets.QLabel(" " if self.matrizAerea[i][j] == 0 else "*")
                 font = QtGui.QFont()
                 font.setPointSize(20)
                 labelAerea.setFont(font)
                 self.labelAerea1[i][j] = labelAerea
-                labelAerea.setFixedWidth(20)
-                labelAerea.setFixedHeight(20)
+                labelAerea.setFixedSize(30, 30)
                 self.gridLayout.addWidget(labelAerea, i, j)
 
+        # Inicialização dos rótulos verticais
+        for vertical_index in range(len(self.asterisks)):
+            PosV = QtWidgets.QLabel(" " if self.asterisks[vertical_index] != 0 else "*")
+            font = QtGui.QFont()
+            font.setPointSize(27)  # Define o tamanho da fonte como 20 pontos
+            PosV.setFont(font)
+            self.labels[vertical_index] = PosV
+            self.gridLayout2.addWidget(PosV, vertical_index, 0)
+
         self.update_cursorH()
+        self.update_cursorV()
+
+    def update_cursorH(self):
+        for i in range(8):
+            for j in range(8):
+                if self.matrizAerea[i][j] != 0:
+                    self.labelAerea1[i][j].setText("*" if [i, j] == self.cursor_positionA else " ")
 
     def move_cursor_Straight(self):
         new_row = max(0, self.cursor_positionA[0] - 1)
@@ -724,31 +653,6 @@ class Ui_MainWindow(object):
             self.cursor_positionA[1] = new_col
         self.update_cursorH()
 
-    def update_cursorH(self):
-        for i in range(8):
-            for j in range(8):
-                if self.matrizAerea[i][j] != 0:
-                    self.labelAerea1[i][j].setText("*" if [i, j] == self.cursor_positionA else " ")
-# Matriz vertical
-
-        self.asterisks = [1, 2, 3, 4, 5]
-        self.cursor_positionV = 4
-        self.labels = [None for _ in range(len(self.asterisks))]
-
-        for vertical_index in range(len(self.asterisks)):
-            PosV = QLabel(" " if self.asterisks [vertical_index] != 0 else "*")
-            font = QtGui.QFont()
-            font.setPointSize(27)  # Define o tamanho da fonte como 20 pontos
-            PosV.setFont(font)
-            self.labels[vertical_index] = PosV
-            self.gridLayout2.addWidget(PosV, vertical_index, 0)
-        self.update_cursorV()
-
-
-
-
-# MOVIMENTAÇÃO VERTICAL SUBIR E DESCER      
-    
     def move_cursor_up(self):
         if self.cursor_positionV > 0:  # Verifica se não está na primeira posição
          self.cursor_positionV -= 1
@@ -756,10 +660,9 @@ class Ui_MainWindow(object):
 
     def move_cursor_down(self):
         if self.cursor_positionV < len(self.asterisks) - 1:  # Verifica se não está na última posição
-          self.cursor_positionV += 1
+            self.cursor_positionV += 1
         self.update_cursorV()
 
-    
     def update_cursorV(self):
         for vertical_index in range(len(self.asterisks)):
             if vertical_index == self.cursor_positionV:
@@ -767,55 +670,16 @@ class Ui_MainWindow(object):
             else:
                 self.labels[vertical_index].setText(" ")  # Asterisco nas outras posições
 
-    
 
-
-#    def VistaVerti(self):
-
-
-    def start_stream(self):
-        self.pushButton_start.setEnabled(False)
-        self.pushButton_end.setEnabled(True)
-        self.video_label.setText("Recebendo vídeo...")
-        self.video_stream.start()
-
-
-    def end_stream(self):
-        self.pushButton_start.setEnabled(True)
-        self.pushButton_end.setEnabled(False)
-        self.video_label.setText("Aguardando transmissão...")
-        self.video_stream.stop()
-        self.video_stream.wait()
-        del self.video_stream
-        self.video_stream = VideoStream()
-        self.video_stream.frame_updated.connect(self.update_frame)
-
-
-    def update_frame(self, pixmap):
-       self.video_label.setPixmap(pixmap)
-
-    def starQt_stream2(self):
-        self.pushButton_start2.setEnabled(False)
-        self.pushButton_end2.setEnabled(True)
-        self.video_label2.setText("Recebendo vídeo...")
-        self.video_stream2.start()
-
-
-    def end_stream2(self):
-        self.pushButton_start2.setEnabled(True)
-        self.pushButton_end2.setEnabled(False)
-        self.video_label2.setText("Aguardando transmissão...")
-        self.video_stream2.stop()
-        self.video_stream2.wait()
-        del self.video_stream2
-        self.video_stream2 = VideoStream()
-        self.video_stream2.frame_updated.connect(self.update_frame2)
-
-
-    def update_frame2(self, pixmap):
-       self.video_label2.setPixmap(pixmap)
-################################ aaa
-# Botões pra extender a camera normal
+####PROBLEMA NA LINHA 681 NÃO TEM ATRIBUTO IMAGE
+    def update_image(self):
+        if self.ros_interface.image is not None:
+            height, width, channel = self.ros_interface.image.shape
+            bytes_per_line = 3 * width
+            q_img = QImage(self.ros_interface.image.data, width, height, bytes_per_line, QImage.Format_RGB888).rgbSwapped()
+            self.video_label.setPixmap(QPixmap.fromImage(q_img))
+     # MOVIMENTAÇÃO VERTICAL SUBIR E DESCER      
+       
 
     def expand_camera(self):
         self.CameraNormal.setGeometry(QtCore.QRect(0, 0, 1082, 551))
@@ -824,7 +688,7 @@ class Ui_MainWindow(object):
         self.pushButton_start.setGeometry(QtCore.QRect(500, 50, 90, 25))
         self.pushButton_end.setGeometry(QtCore.QRect(470, 77, 140, 30))
 
-        self.video_label.setGeometry(QtCore.QRect(300, 120, 498, 425))  # Defina as coordenadas e tamanho conforme necessário
+        self.video_label.setGeometry(QtCore.QRect(140, 120, 850, 425))  # Defina as coordenadas e tamanho conforme necessário
         self.pushButton.setGeometry(QtCore.QRect(1000, 210, 31, 25))
         self.pushButton.setText("←")
         self.label_63.setGeometry(QtCore.QRect(470, 0, 241, 51))
@@ -887,11 +751,16 @@ class Ui_MainWindow(object):
 
 
 
+
+
 if __name__ == "__main__":
-    import sys
+    rospy.init_node("interface_drone")
     app = QtWidgets.QApplication(sys.argv)
+    ros_adapter = ROSAdapter()
     MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
+    ui = Ui_MainWindow(ros_adapter)
     ui.setupUi(MainWindow)
     MainWindow.show()
+    rate = rospy.Rate(10)
     sys.exit(app.exec_())
+
