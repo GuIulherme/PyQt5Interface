@@ -91,7 +91,7 @@ b. Escopo do projeto
 
 <h1>Diagrama de Caso de Uso</h1>
 
-![DA](Diagramacasousoprojeto.png)
+![DA](imgs/Diagramacasousoprojeto.png)
 
 <h1> Cronograma </h1>
 
