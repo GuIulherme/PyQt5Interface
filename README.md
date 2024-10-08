@@ -91,7 +91,11 @@ b. Escopo do projeto
 
 <h1>Diagrama de Caso de Uso</h1>
 
-![DA](Diagramacasousoprojeto.png)
+![DC](imgs/Diagramacasousoprojeto.png)
+
+<h1>Diagrama de conexão entre os nós do ROS</h1>
+
+![DR](imgs/diagramacomunicacao.png)
 
 <h1> Cronograma </h1>
 
