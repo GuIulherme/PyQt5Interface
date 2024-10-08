@@ -101,21 +101,9 @@ class Ui_MainWindow(object):
         self.CameraNormal.setFrameShadow(QtWidgets.QFrame.Raised)
         self.CameraNormal.setObjectName("CameraNormal")
 
-
-
-# BOTÃO PARA COMEÇAR A TRANSMISSÃO DE VIDEO
-
-        self.pushButton_start = CustomButton(self.CameraNormal, "Iniciar", 230, 50, 90, 25, use_clicked=True)
-
-# BOTÃO PARA TERMINAR A TRANSMISSÃO
-        self.pushButton_end = QtWidgets.QPushButton("Parar transmissão", self.CameraNormal)
-        self.pushButton_end.setGeometry(QtCore.QRect(200, 77, 140, 30))
-        self.pushButton_end.setObjectName("pushButton_end")
-
-
 # LABEL AGUARDANDO TRANSMISSÃO
         self.video_label = QLabel(self.CameraNormal)
-        self.video_label.setGeometry(QtCore.QRect(10, 120, 498, 425))  
+        self.video_label.setGeometry(QtCore.QRect(10, 50, 498, 480))  
         self.video_label.setText("Aguardando transmissão...")
         self.video_label.setStyleSheet("background-color: lightgreen") 
 
@@ -199,21 +187,9 @@ class Ui_MainWindow(object):
         self.label_62.setFont(font)
         self.label_62.setObjectName("label_62")
 
-# BOTÃO PARA COMEÇAR A TRANSMISSÃO DE VIDEO
-        self.pushButton_start2 = QtWidgets.QPushButton("Iniciar", self.CameraTermic)
-        self.pushButton_start2.setGeometry(QtCore.QRect(230, 50, 90, 25))
-        self.pushButton_start2.setObjectName("pushButton_start")
-        
-
-# BOTÃO PARA TERMINAR A TRANSMISSÃO
-        self.pushButton_end2 = QtWidgets.QPushButton("Parar transmissão", self.CameraTermic)
-        self.pushButton_end2.setGeometry(QtCore.QRect(200, 77, 140, 30))
-        self.pushButton_end2.setObjectName("pushButton_end")
-
-
 # LABEL AGUARDANDO TRANSMISSÃO
         self.video_label2 = QLabel(self.CameraTermic)
-        self.video_label2.setGeometry(QtCore.QRect(42, 120, 490, 425))
+        self.video_label2.setGeometry(QtCore.QRect(42, 50, 498, 480))
         self.video_label2.setText("Aguardando transmissão...")
         self.video_label2.setStyleSheet("background-color: lightgreen") 
 
@@ -684,11 +660,8 @@ class Ui_MainWindow(object):
     def expand_camera(self):
         self.CameraNormal.setGeometry(QtCore.QRect(0, 0, 1082, 551))
         self.CameraTermic.hide()
-       
-        self.pushButton_start.setGeometry(QtCore.QRect(500, 50, 90, 25))
-        self.pushButton_end.setGeometry(QtCore.QRect(470, 77, 140, 30))
 
-        self.video_label.setGeometry(QtCore.QRect(140, 120, 850, 425))  # Defina as coordenadas e tamanho conforme necessário
+        self.video_label.setGeometry(QtCore.QRect(140, 50, 850, 480))  # Defina as coordenadas e tamanho conforme necessário
         self.pushButton.setGeometry(QtCore.QRect(1000, 210, 31, 25))
         self.pushButton.setText("←")
         self.label_63.setGeometry(QtCore.QRect(470, 0, 241, 51))
@@ -697,10 +670,9 @@ class Ui_MainWindow(object):
          
          self.CameraNormal.setGeometry(QtCore.QRect(0, 0, 550, 551))
          self.CameraTermic.show()
-         self.video_label.setGeometry(QtCore.QRect(10, 120, 498, 425))  # Defina as coordenadas e tamanho conforme necessário
+         self.video_label.setGeometry(QtCore.QRect(10, 50, 498, 480))  # Defina as coordenadas e tamanho conforme necessário
              
-         self.pushButton_end.setGeometry(QtCore.QRect(200, 77, 140, 30))
-         self.pushButton_start.setGeometry(QtCore.QRect(230, 50, 90, 25))
+
          self.pushButton.setGeometry(QtCore.QRect(510, 210, 31, 25))
          self.pushButton.setText("→")
          self.label_63.setGeometry(QtCore.QRect(180, 0, 171, 51))
@@ -721,10 +693,9 @@ class Ui_MainWindow(object):
         self.CameraTermic.setGeometry(QtCore.QRect(0, 0, 1082, 551))
         self.CameraNormal.hide()
 
-        self.pushButton_start2.setGeometry(QtCore.QRect(500, 50, 90, 25))
-        self.pushButton_end2.setGeometry(QtCore.QRect(470, 77, 140, 30))
 
-        self.video_label2.setGeometry(QtCore.QRect(300, 120, 498, 425))  
+
+        self.video_label2.setGeometry(QtCore.QRect(300, 50, 850, 480))  
         self.pushButton_2.setGeometry(QtCore.QRect(10, 210, 31, 25))
         self.pushButton_2.setText("→")
         self.label_62.setGeometry(QtCore.QRect(470, 0, 241, 51))
@@ -733,9 +704,7 @@ class Ui_MainWindow(object):
          self.CameraTermic.setGeometry(QtCore.QRect(550, 0, 541, 551))
          self.CameraNormal.show()
         
-         self.pushButton_start2.setGeometry(QtCore.QRect(230, 50, 90, 25))
-         self.pushButton_end2.setGeometry(QtCore.QRect(200, 77, 140, 30))
-         self.video_label2.setGeometry(QtCore.QRect(42, 120, 490, 425))  # Defina as coordenadas e tamanho conforme necessário
+         self.video_label2.setGeometry(QtCore.QRect(42, 50, 490, 480))  # Defina as coordenadas e tamanho conforme necessário
 
          self.pushButton_2.setGeometry(QtCore.QRect(10, 210, 31, 25))
          self.pushButton_2.setText("←")
@@ -763,4 +732,3 @@ if __name__ == "__main__":
     MainWindow.show()
     rate = rospy.Rate(10)
     sys.exit(app.exec_())
-
