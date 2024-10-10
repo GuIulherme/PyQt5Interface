@@ -93,7 +93,7 @@ b. Escopo do projeto
 
 ![DC](imgs/Diagramacasousoprojeto.png)
 
-<h1>Diagrama de conexão entre os nós do ROS</h1>
+<h1>Fluxograma de conexão entre os nós do ROS</h1>
 
 ![DR](imgs/diagramacomunicacao.png)
 
