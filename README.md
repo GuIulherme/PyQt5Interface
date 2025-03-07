@@ -274,12 +274,6 @@ b. Escopo do projeto
     <td>https://code.visualstudio.com/</td>
     <td>Editor de código-fonte</td>
 
-  </tr>
-   <tr>
-    <td>Canva</td>
-    <td>-</td>
-    <td>https://www.canva.com/pt_br/</td>
-    <td>Prototipação das telas e edição de artes para a interface </td>
 
   </tr>
     <tr>
